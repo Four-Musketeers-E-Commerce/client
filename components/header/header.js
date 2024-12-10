@@ -3,17 +3,29 @@ import { Box, Button, Icon, IconButton, InputBase, Paper, Typography } from "@mu
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
+import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AccountMenu from "./account-menu";
+import ProductMenu from "./product-menu";
 
 export default function Header() {
     const router = useRouter();
+    const [productMenuAnchorEl, setProductMenuAnchorEl] = useState(null)
+    const [openProductMenu, setOpenProductMenu] = useState(false)
     const [accountAnchorEl, setAccountAnchorEl] = useState(null)
     const [openAccountMenu, setOpenAccountMenu] = useState(false)
+
+    const handleOpenProductMenu = (event) => {
+        setProductMenuAnchorEl(event.currentTarget);
+        setOpenProductMenu(true);
+    }
+
+    const handleCloseProductMenu = () => {
+        setProductMenuAnchorEl(null);
+        setOpenProductMenu(false);
+    }
 
     const handleOpenAccountMenu = (event) => {
         setAccountAnchorEl(event.currentTarget);
@@ -32,6 +44,9 @@ export default function Header() {
             alignContent="center"
             justifyContent="space-between"
             padding="15px"
+            sx={{
+                background: "linear-gradient(to left, #608BC1, #133E87)"
+            }}
         >
             <Button
                 sx={{
@@ -44,24 +59,39 @@ export default function Header() {
                 }}
                 onClick={() => router.push("/")}
             >
-                <Typography variant="h4">
+                <Typography
+                    variant="h4"
+                    sx={{
+                        fontFamily: 'BlinkMacSystemFont'
+                    }}
+                >
                     Four Musketeers
                 </Typography>
                 <LocalFireDepartmentIcon fontSize="large" sx={{ rotate: "-35deg" }} />
             </Button>
             <Paper
                 component="form"
-                sx={{ 
-                    p: '2px 4px', 
-                    display: 'flex', 
+                sx={{
+                    p: '2px 4px',
+                    display: 'flex',
                     flexDirection: 'row',
-                    alignItems: 'center', 
+                    alignItems: 'center',
                     width: "500px",
-                    borderRadius: "16px"
+                    borderRadius: "16px",
+                    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.15)"
                 }}
             >
-                <IconButton sx={{ p: '10px' }} aria-label="menu">
-                </IconButton>
+                <Box
+                    onMouseOver={handleOpenProductMenu}
+                    onMouseLeave={handleCloseProductMenu}
+                >
+                    <MenuIcon />
+                    <ProductMenu
+                        anchorEl={productMenuAnchorEl}
+                        open={openProductMenu}
+                        onClose={handleCloseProductMenu}
+                    />
+                </Box>
                 <InputBase
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search Products"
@@ -76,14 +106,9 @@ export default function Header() {
                 flexDirection="row"
                 alignContent="center"
                 gap="15px"
-            // sx={{
-            //     position: "absolute",
-            //     right: "3%",
-            //     transform: "translateX(3%)"
-            // }}
             >
                 <IconButton
-                    color="primary"
+                    color="warning"
                     onClick={() => { router.push("/shopping-cart") }}
                 >
                     <ShoppingCartOutlinedIcon fontSize="large" />
@@ -100,15 +125,11 @@ export default function Header() {
                         zIndex: 0
                     }}
                 >
-                    <AccountCircleOutlinedIcon fontSize="large" />
-                    {openAccountMenu ?
-                        <KeyboardArrowUpOutlinedIcon fontSize="medium" /> :
-                        <KeyboardArrowDownOutlinedIcon fontSize="medium" />
-                    }
+                    <AccountCircleOutlinedIcon fontSize="large" color="secondary" />
                     <AccountMenu
                         anchorEl={accountAnchorEl}
                         open={openAccountMenu}
-                        handleCloseAccountMenu={handleCloseAccountMenu}
+                        onClose={handleCloseAccountMenu}
                     />
                 </Box>
             </Box>

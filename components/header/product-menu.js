@@ -1,10 +1,29 @@
 "use client";
-import { MenuItem } from '@mui/material';
+import { MenuItem, Typography } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import { useRouter } from 'next/navigation';
 
-export default function AccountMenu({ anchorEl, open, onClose }) {
-    const router = useRouter();
+const categories = [
+    {
+        id: 1,
+        category: "Clothing"
+    },
+    {
+        id: 2,
+        category: "Electronics"
+    },
+    {
+        id: 3,
+        category: "Home Appliances"
+    },
+    {
+        id: 4,
+        category: "Toys & Games"
+    },
+];
+
+export default function ProductMenu({ anchorEl, open, onClose }) {
+    // const router = useRouter();
 
     return (
         <Menu
@@ -16,13 +35,16 @@ export default function AccountMenu({ anchorEl, open, onClose }) {
                 paper: {
                     elevation: 0,
                     sx: {
+                        width: "15rem",
+                        height: "30rem",
                         overflow: 'visible',
                         borderRadius: "16px",
+                        padding: 2,
                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                         mt: 1.5,
                         '& .MuiAvatar-root': {
-                            width: 32,
-                            height: 32,
+                            width: 150,
+                            height: 200,
                             ml: -0.5,
                             mr: 1,
                         },
@@ -41,19 +63,17 @@ export default function AccountMenu({ anchorEl, open, onClose }) {
                     },
                 },
             }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            transformOrigin={{ horizontal: 'center', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
         >
-            <MenuItem
-                onClick={() => { router.push("/login") }}
-            >
-                Login
-            </MenuItem>
-            <MenuItem
-                onClick={() => { router.push("/register") }}
-            >
-                Register
-            </MenuItem>
+            <Typography variant="h5" width="100%" mb={2}>All Categories</Typography>
+            {categories.map(item => (
+                <MenuItem key={item.id} width="100%">
+                    <Typography variant='body1'>
+                        {item.category}
+                    </Typography>
+                </MenuItem>
+            ))}
         </Menu>
     );
 }
