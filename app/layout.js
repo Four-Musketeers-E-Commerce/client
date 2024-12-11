@@ -33,7 +33,6 @@ export default function RootLayout({ children }) {
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
-          padding={3}
         >
           {children}
         </Box>
