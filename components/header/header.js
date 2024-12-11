@@ -60,9 +60,9 @@ export default function Header() {
                 onClick={() => router.push("/")}
             >
                 <Typography
-                    variant="h4"
+                    variant="h5"
                     sx={{
-                        fontFamily: 'BlinkMacSystemFont'
+                        fontFamily: "monospace"
                     }}
                 >
                     Four Musketeers

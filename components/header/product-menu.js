@@ -1,6 +1,7 @@
 "use client";
-import { MenuItem, Typography } from '@mui/material';
+import { Box, Icon, MenuItem, Typography } from '@mui/material';
 import Menu from '@mui/material/Menu';
+import ListIcon from '@mui/icons-material/List';
 import { useRouter } from 'next/navigation';
 
 const categories = [
@@ -20,6 +21,14 @@ const categories = [
         id: 4,
         category: "Toys & Games"
     },
+    {
+        id: 5,
+        category: "Education"
+    },
+    {
+        id: 6,
+        category: "Jewelry"
+    },
 ];
 
 export default function ProductMenu({ anchorEl, open, onClose }) {
@@ -36,7 +45,7 @@ export default function ProductMenu({ anchorEl, open, onClose }) {
                     elevation: 0,
                     sx: {
                         width: "15rem",
-                        height: "30rem",
+                        height: "20rem",
                         overflow: 'visible',
                         borderRadius: "16px",
                         padding: 2,
@@ -66,7 +75,24 @@ export default function ProductMenu({ anchorEl, open, onClose }) {
             transformOrigin={{ horizontal: 'center', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
         >
-            <Typography variant="h5" width="100%" mb={2}>All Categories</Typography>
+            <Box
+                width="100%"
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                gap={1}
+                mb={1}
+            >
+                <ListIcon fontSize='large' />
+                <Typography
+                    variant="h5"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                >
+                    All Categories
+                </Typography>
+            </Box>
             {categories.map(item => (
                 <MenuItem key={item.id} width="100%">
                     <Typography variant='body1'>
